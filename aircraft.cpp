@@ -1,7 +1,7 @@
 // =====================================================
-// Aircraft class — models simple flight dynamics
+// Aircraft class — 2d aircraft flight simulator
 // Author: VacationAir 
-// Latest revision: 5/11/2025 
+// Latest revision: 6/11/2025 
 // =====================================================
 
 
@@ -16,6 +16,8 @@ private:
     double mass;
     double position;
     double speed;
+    double acceleration;
+    double vs; // Vertical speed
     double altitude; // In meters, not feet
     double theta; // Degrees
     double theta_rad;
@@ -27,11 +29,15 @@ private:
     double CL; //   Lift coefficient
     double CD; //   Drag coefficient
     double rho; //  Air density
+    double eep; // Estimated engine performance 
 public:
-    Aircraft(double mass, double position, double speed, double altitude,double theta, double power, double wingarea)
+    Aircraft(double mass, double eep, double position, double speed, double altitude,double theta, double power, double wingarea)
     :   mass(mass),
+        eep(eep),
         position(position), 
         speed(speed), 
+        acceleration(0),
+        vs(0),
         altitude(altitude), 
         theta(theta),
         theta_rad(theta*M_PI/180),
@@ -46,9 +52,10 @@ public:
 
     void update(double dt){
         speed = sqrt(vx*vx + vy*vy);
+        vs = vy;
         theta_rad = atan2(vy, vx);
         theta = theta_rad*180/M_PI;
-        thrust = power/speed; 
+        thrust = eep * power/ std::max(speed, 1.0); 
         // Forces
         double lift = 0.5 * CL * rho * speed * speed * wing_area;
         double drag = 0.5 * CD * rho * speed * speed * wing_area;
@@ -59,6 +66,7 @@ public:
         // Acceleration components 
         double ax = Fx / mass;
         double ay = Fy / mass;
+        acceleration = sqrt(ax*ax + ay*ay);
 
         // Integrate in order to calculate velocity.
         vx += ax * dt;
@@ -86,6 +94,12 @@ public:
     }
     double getAngleThetaDegree(){
         return theta;
+    }
+    double getVs(){
+        return vs;
+    }
+    double getAcceleration(){
+        return acceleration;
     }
 };
 
