@@ -1,10 +1,14 @@
+// =====================================================
+// Aircraft class — models simple flight dynamics
+// Author: VacationAir 
+// Latest revision: 5/11/2025 
+// =====================================================
+
+
+
 #include <iostream>
 #include <cmath>
 
-
-// =====================================================
-// Aircraft class — models simple flight dynamics
-// =====================================================
 
 class Aircraft {
 private:
@@ -43,7 +47,8 @@ public:
     void update(double dt){
         speed = sqrt(vx*vx + vy*vy);
         theta_rad = atan2(vy, vx);
-        thrust = 2000;
+        theta = theta_rad*180/M_PI;
+        thrust = power/speed; 
         // Forces
         double lift = 0.5 * CL * rho * speed * speed * wing_area;
         double drag = 0.5 * CD * rho * speed * speed * wing_area;
@@ -63,8 +68,24 @@ public:
         std::cout << "Speed: " << speed << "m/s\n";
         std::cout << "Position: " << position << "m\n";
         std::cout << "Altitude: " << altitude << "m\n";
-        std::cout << "Angle theta: " << theta_rad *180 / M_PI << " in degrees\n";
+        std::cout << "Angle theta: " << theta << " in degrees\n";
 
+    }
+    // ======================
+    // Get and Set functions
+    // ======================
+    
+    double getAltitude(){
+        return altitude;
+    }
+    double getSpeed(){
+        return speed;
+    }
+    double getPosition(){
+        return position;
+    }
+    double getAngleThetaDegree(){
+        return theta;
     }
 };
 
