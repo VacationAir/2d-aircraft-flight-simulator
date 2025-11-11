@@ -1,7 +1,7 @@
 // =====================================================
 // Aircraft class — 2d aircraft flight simulator
 // Author: VacationAir 
-// Latest revision: 6/11/2025 
+// Latest revision: 11/11/2025 
 // =====================================================
 
 
@@ -12,24 +12,24 @@
 
 class Aircraft {
 private:
-    //Atributes
-    double mass;
-    double position;
-    double speed;
-    double acceleration;
-    double vs; // Vertical speed
-    double altitude; // In meters, not feet
-    double theta; // Degrees
-    double theta_rad;
-    double vx;
-    double vy;
-    double power;
-    double thrust;
-    double wing_area;
-    double CL; //   Lift coefficient
-    double CD; //   Drag coefficient
-    double rho; //  Air density
-    double eep; // Estimated engine performance 
+    // Physical attributes
+    double mass;           // Aircraft mass (kg)
+    double position;       // Horizontal position (m)
+    double speed;          // Total speed (m/s)
+    double acceleration;   // Total acceleration (m/s²)
+    double vs;             // Vertical speed (m/s)
+    double altitude;       // Altitude (m)
+    double theta;          // Pitch angle (degrees)
+    double theta_rad;      // Pitch angle (radians)
+    double vx;             // Horizontal velocity (m/s)
+    double vy;             // Vertical velocity (m/s)
+    double power;          // Engine power (W)
+    double thrust;         // Thrust force (N)
+    double wing_area;      // Wing area (m²)
+    double CL;             // Lift coefficient
+    double CD;             // Drag coefficient
+    double rho;            // Air density (kg/m³)
+    double eep;            // Estimated engine performance factor
 public:
     Aircraft(double mass, double eep, double position, double speed, double altitude,double theta, double power, double wingarea)
     :   mass(mass),
